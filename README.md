@@ -25,7 +25,7 @@ You can:
 
 ### Installation
 
-Dillinger requires [Node.js](https://nodejs.org/) to run.
+Requires [Node.js](https://nodejs.org/) to run.
 
 Install the dependencies and devDependencies and start the server.
 
