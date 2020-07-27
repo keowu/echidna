@@ -1,0 +1,503 @@
+{
+    "article": [
+      {
+        "header": {
+          "h3": "mov — Move (Opcodes: 88, 89, 8A, 8B, 8C, 8E, ...)"
+        },
+        "footer": {
+          "p": "The mov instruction copies the data item referred to by its second operand (i.e. register contents, memory contents, or a constant value) into the location referred to by its first operand (i.e. a register or memory). While register-to-register moves are possible, direct memory-to-memory moves are not. In cases where memory transfers are desired, the source memory contents must first be loaded into a register, then can be stored to the destination memory address.",
+          "h4": [
+            "Syntax",
+            "Examples"
+          ],
+          "ul": [
+            {
+              "li": [
+                "mov reg,reg",
+                "mov reg,mem",
+                "mov mem,reg",
+                "mov reg,const",
+                "mov mem,const"
+              ]
+            },
+            {
+              "li": [
+                "mov eax, ebx — copy the value in ebx into eax",
+                "mov byte ptr [var], 5 — store the value 5 into the byte at location var"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "push — Push stack (Opcodes: FF, 89, 8A, 8B, 8C, 8E, ...)"
+        },
+        "footer": {
+          "p": "The push instruction places its operand onto the top of the hardware supported stack in memory. Specifically, push first decrements ESP by 4, then places its operand into the contents of the 32-bit location at address [ESP]. ESP (the stack pointer) is decremented by push since the x86 stack grows down - i.e. the stack grows from high addresses to lower addresses.",
+          "h4": [
+            "Syntax",
+            "Examples"
+          ],
+          "ul": [
+            {
+              "li": [
+                "push reg32",
+                "push mem",
+                "push con32"
+              ]
+            },
+            {
+              "li": [
+                "push eax — push eax on the stack",
+                "push [var] — push the 4 bytes at address var onto the stack"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "pop — Pop stack"
+        },
+        "footer": {
+          "p": "The pop instruction removes the 4-byte data element from the top of the hardware-supported stack into the specified operand (i.e. register or memory location). It first moves the 4 bytes located at memory location [SP] into the specified register or memory location, and then increments SP by 4.",
+          "h4": [
+            "Syntax",
+            "Examples"
+          ],
+          "ul": [
+            {
+              "li": [
+                "pop reg32",
+                "pop mem"
+              ]
+            },
+            {
+              "li": [
+                "pop edi — pop the top element of the stack into EDI.",
+                "pop [ebx] — pop the top element of the stack into memory at the four bytes starting at location EBX."
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "lea — Load effective address"
+        },
+        "footer": {
+          "p": "The lea instruction places the address specified by its second operand into the register specified by its first operand. Note, the contents of the memory location are not loaded, only the effective address is computed and placed into the register. This is useful for obtaining a pointer into a memory region.",
+          "h4": [
+            "Syntax",
+            "Examples"
+          ],
+          "ul": [
+            {
+              "li": [
+                "lea reg32,mem"
+              ]
+            },
+            {
+              "li": [
+                "lea edi, [ebx+4*esi] — the quantity EBX+4*ESI is placed in EDI.",
+                "lea eax, [var] — the value in var is placed in EAX.",
+                "lea eax, [val] — the value val is placed in EAX."
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "add — Integer Addition"
+        },
+        "footer": {
+          "p": "The add instruction adds together its two operands, storing the result in its first operand. Note, whereas both operands may be registers, at most one operand may be a memory location.",
+          "h4": [
+            "Syntax",
+            "Examples"
+          ],
+          "ul": [
+            {
+              "li": [
+                "add reg,reg",
+                "add reg,mem",
+                "add mem,reg",
+                "add reg,con",
+                "add mem,con"
+              ]
+            },
+            {
+              "li": [
+                "add eax, 10 — EAX ← EAX + 10",
+                "add BYTE PTR [var], 10 — add 10 to the single byte stored at memory address var"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "sub — Integer Subtraction"
+        },
+        "footer": {
+          "p": "The sub instruction stores in the value of its first operand the result of subtracting the value of its second operand from the value of its first operand. As with add",
+          "h4": [
+            "Syntax",
+            "Examples"
+          ],
+          "ul": [
+            {
+              "li": [
+                "sub reg,reg",
+                "sub reg,mem",
+                "sub mem,reg",
+                "sub reg,con",
+                "sub mem,con"
+              ]
+            },
+            {
+              "li": [
+                "sub al, ah — AL ← AL - AH",
+                "sub eax, 216 — subtract 216 from the value stored in EAX"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "inc, dec — Increment, Decrement"
+        },
+        "footer": {
+          "p": "The inc instruction increments the contents of its operand by one. The dec instruction decrements the contents of its operand by one.",
+          "h4": [
+            "Syntax",
+            "Examples"
+          ],
+          "ul": [
+            {
+              "li": [
+                "inc reg",
+                "inc mem",
+                "dec reg",
+                "dec mem"
+              ]
+            },
+            {
+              "li": [
+                "dec eax — subtract one from the contents of EAX.",
+                "inc DWORD PTR [var] — add one to the 32-bit integer stored at location var"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "imul — Integer Multiplication"
+        },
+        "footer": {
+          "p": "The imul instruction has two basic formats: two-operand (first two syntax listings above) and three-operand (last two syntax listings above). The two-operand form multiplies its two operands together and stores the result in the first operand. The result (i.e. first) operand must be a register. The three operand form multiplies its second and third operands together and stores the result in its first operand. Again, the result operand must be a register. Furthermore, the third operand is restricted to being a constant value.",
+          "h4": [
+            "Syntax",
+            "Examples"
+          ],
+          "ul": [
+            {
+              "li": [
+                "imul reg32,reg32",
+                "imul reg32,mem",
+                "imul reg32,reg32,con",
+                "imul reg32,mem,con"
+              ]
+            },
+            {
+              "li": [
+                "imul eax, [var] — multiply the contents of EAX by the 32-bit contents of the memory location var. Store the result in EAX.",
+                "imul esi, edi, 25 — ESI → EDI * 25"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "idiv — Integer Division"
+        },
+        "footer": {
+          "p": "The idiv instruction divides the contents of the 64 bit integer EDX:EAX (constructed by viewing EDX as the most significant four bytes and EAX as the least significant four bytes) by the specified operand value. The quotient result of the division is stored into EAX, while the remainder is placed in EDX.",
+          "h4": [
+            "Syntax",
+            "Examples"
+          ],
+          "ul": [
+            {
+              "li": [
+                "idiv reg32",
+                "idiv mem"
+              ]
+            },
+            {
+              "li": [
+                "idiv ebx — divide the contents of EDX:EAX by the contents of EBX. Place the quotient in EAX and the remainder in EDX.",
+                "idiv DWORD PTR [var] — divide the contents of EDX:EAX by the 32-bit value stored at memory location var. Place the quotient in EAX and the remainder in EDX."
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "and, or, xor — Bitwise logical and, or and exclusive or"
+        },
+        "footer": {
+          "p": "These instructions perform the specified logical operation (logical bitwise and, or, and exclusive or, respectively) on their operands, placing the result in the first operand location.",
+          "h4": [
+            "Syntax",
+            "Examples"
+          ],
+          "ul": [
+            {
+              "li": [
+                "and reg,reg",
+                "and reg,mem",
+                "and mem,reg",
+                "and reg,con",
+                "and mem,con"
+              ]
+            },
+            {
+              "li": [
+                "or reg,reg",
+                "or reg,mem",
+                "or mem,reg",
+                "or reg,con",
+                "or mem,con"
+              ]
+            },
+            {
+              "li": [
+                "xor reg,reg",
+                "xor reg,mem",
+                "xor mem,reg",
+                "xor reg,con",
+                "xor mem,con"
+              ]
+            },
+            {
+              "li": [
+                "and eax, 0fH — clear all but the last 4 bits of EAX.",
+                "xor edx, edx — set the contents of EDX to zero."
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "not — Bitwise Logical Not"
+        },
+        "footer": {
+          "p": "Logically negates the operand contents (that is, flips all bit values in the operand).",
+          "h4": [
+            "Syntax",
+            "Examples"
+          ],
+          "ul": [
+            {
+              "li": [
+                "not reg",
+                "not mem"
+              ]
+            },
+            {
+              "li": [
+                "not BYTE PTR [var] — negate all bits in the byte at the memory location var."
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "neg — Negate"
+        },
+        "footer": {
+          "p": "Performs the two's complement negation of the operand contents.",
+          "h4": [
+            "Syntax",
+            "Examples"
+          ],
+          "ul": [
+            {
+              "li": [
+                "neg reg",
+                "neg mem"
+              ]
+            },
+            {
+              "li": [
+                "neg eax — EAX → - EAX"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "shl, shr — Shift Left, Shift Right"
+        },
+        "footer": {
+          "p": "These instructions shift the bits in their first operand's contents left and right, padding the resulting empty bit positions with zeros. The shifted operand can be shifted up to 31 places. The number of bits to shift is specified by the second operand, which can be either an 8-bit constant or the register CL. In either case, shifts counts of greater then 31 are performed modulo 32.",
+          "h4": [
+            "Syntax",
+            "Examples"
+          ],
+          "ul": [
+            {
+              "li": [
+                "shl reg,con8",
+                "shl mem,con8",
+                "shl reg,cl",
+                "shl mem,cl"
+              ]
+            },
+            {
+              "li": [
+                "shr reg,con8",
+                "shr mem,con8",
+                "shr reg,cl",
+                "shr mem,cl"
+              ]
+            },
+            {
+              "li": [
+                "shl eax, 1 — Multiply the value of EAX by 2 (if the most significant bit is 0)",
+                "shr ebx, cl — Store in EBX the floor of result of dividing the value of EBX by 2n wheren is the value in CL."
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "jmp — Jump"
+        },
+        "footer": {
+          "p": "Transfers program control flow to the instruction at the memory location indicated by the operand.",
+          "h4": [
+            "Syntax",
+            "Examples"
+          ],
+          "ul": [
+            {
+              "li": [
+                "jmp label"
+              ]
+            },
+            {
+              "li": [
+                "jmp begin — Jump to the instruction labeled begin."
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "jcondition — Conditional Jump"
+        },
+        "footer": {
+          "p": "These instructions are conditional jumps that are based on the status of a set of condition codes that are stored in a special register called the machine status word. The contents of the machine status word include information about the last arithmetic operation performed. For example, one bit of this word indicates if the last result was zero. Another indicates if the last result was negative. Based on these condition codes, a number of conditional jumps can be performed. For example, the jz instruction performs a jump to the specified operand label if the result of the last arithmetic operation was zero. Otherwise, control proceeds to the next instruction in sequence. A number of the conditional branches are given names that are intuitively based on the last operation performed being a special compare instruction, cmp (see below). For example, conditional branches such as jle and jne are based on first performing a cmp operation on the desired operands.",
+          "h4": [
+            "Syntax",
+            "Examples"
+          ],
+          "ul": [
+            {
+              "li": [
+                "je label (jump when equal)",
+                "jne label (jump when not equal)",
+                "jz label (jump when last result was zero)",
+                "jg label (jump when greater than)",
+                "jge label (jump when greater than or equal to)",
+                "jl label (jump when less than)",
+                "jle label (jump when less than or equal to)"
+              ]
+            },
+            {
+              "li": [
+                "cmp eax, ebx",
+                "jle done",
+                "If the contents of EAX are less than or equal to the contents of EBX, jump to the label done. Otherwise, continue to the next instruction."
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "cmp — Compare"
+        },
+        "footer": {
+          "p": "Compare the values of the two specified operands, setting the condition codes in the machine status word appropriately. This instruction is equivalent to the sub instruction, except the result of the subtraction is discarded instead of replacing the first operand.",
+          "h4": [
+            "Syntax",
+            "Examples"
+          ],
+          "ul": [
+            {
+              "li": [
+                "cmp reg,reg",
+                "cmp reg,mem",
+                "cmp mem,reg",
+                "cmp reg,con"
+              ]
+            },
+            {
+              "li": [
+                "cmp DWORD PTR [var], 10",
+                "jeq loop",
+                "If the 4 bytes stored at location var are equal to the 4-byte integer constant 10, jump to the location labeled loop."
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "call, ret — Subroutine call and return"
+        },
+        "footer": {
+          "p": "These instructions implement a subroutine call and return. The call instruction first pushes the current code location onto the hardware supported stack in memory (see the push instruction for details), and then performs an unconditional jump to the code location indicated by the label operand. Unlike the simple jump instructions, the call instruction saves the location to return to when the subroutine completes. The ret instruction implements a subroutine return mechanism. This instruction first pops a code location off the hardware supported in-memory stack (see the pop instruction for details). It then performs an unconditional jump to the retrieved code location.",
+          "h4": [ 
+            "Syntax"
+          ],
+          "ul": [
+            {
+              "li": [
+                "call label",
+                "ret"
+              ]
+            },
+            {
+              "li": [
+                "call label",
+                "ret"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "header": {
+          "h3": "Calling Convention"
+        },
+        "footer": {
+          "p": "To allow separate programmers to share code and develop libraries for use by many programs, and to simplify the use of subroutines in general, programmers typically adopt a common calling convention. The calling convention is a protocol about how to call and return from routines. For example, given a set of calling convention rules, a programmer need not examine the definition of a subroutine to determine how parameters should be passed to that subroutine. Furthermore, given a set of calling convention rules, high-level language compilers can be made to follow the rules, thus allowing hand-coded assembly language routines and high-level language routines to call one another. In practice, many calling conventions are possible. We will use the widely used C language calling convention. Following this convention will allow you to write assembly language subroutines that are safely callable from C (and C++) code, and will also enable you to call C library functions from your assembly language code. The C calling convention is based heavily on the use of the hardware-supported stack. It is based on the push, pop, call, and ret instructions. Subroutine parameters are passed on the stack. Registers are saved on the stack, and local variables used by subroutines are placed in memory on the stack. The vast majority of high-level procedural languages implemented on most processors have used similar calling conventions. The calling convention is broken into two sets of rules. The first set of rules is employed by the caller of the subroutine, and the second set of rules is observed by the writer of the subroutine (the callee). It should be emphasized that mistakes in the observance of these rules quickly result in fatal program errors since the stack will be left in an inconsistent state; thus meticulous care should be used when implementing the call convention in your own subroutines."
+        }
+      }
+    ]
+  }

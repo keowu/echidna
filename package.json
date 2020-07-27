@@ -1,0 +1,19 @@
+{
+  "name": "echidna-reverse",
+  "version": "1.0.0",
+  "description": "Reverse Engineering helper",
+  "repository": "echidna/development",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron app.js"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^9.1.1"
+  },
+  "dependencies": {
+    "electron-packager": "^15.0.0",
+    "papaparse": "^5.2.0",
+    "request": "^2.88.2"
+  }
+}
